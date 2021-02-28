@@ -29,6 +29,7 @@ public class Team extends MatterMostClientObject
 	public String email;
 	public String type;
 	public String allowed_domains;
+	public String group_constrained;
 	public String invite_id; // What is this ?
 	public boolean allow_open_invite;
 	public String scheme_id;
