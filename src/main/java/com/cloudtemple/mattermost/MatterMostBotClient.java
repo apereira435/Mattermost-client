@@ -16,6 +16,7 @@ import com.cloudtemple.mattermost.traders.team.Team;
 import com.cloudtemple.mattermost.traders.team.TeamId;
 import com.cloudtemple.mattermost.traders.user.User;
 import com.cloudtemple.mattermost.traders.user.UserId;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MappingJsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -41,7 +42,9 @@ public class MatterMostBotClient
 	}
 
 	public static final String apiV4 = "/api/v4";
-	private final ObjectMapper _json = new ObjectMapper().setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+	private final ObjectMapper _json = new ObjectMapper()
+			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+			.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
 	private final WebClient _client;
 	private final WebSocketClient _asyncClient;
 
@@ -154,7 +157,9 @@ public class MatterMostBotClient
 		try
 		{
 			if (200 == status || 201 == status)
-				return new MappingJsonFactory().setCodec(new ObjectMapper().setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)).createParser(str).readValueAs(t);
+				return new MappingJsonFactory().setCodec(new ObjectMapper()
+					.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+					.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)).createParser(str).readValueAs(t);
 			else
 				throw new ApiV4Exception(new MappingJsonFactory().createParser(str).readValueAs(com.cloudtemple.mattermost.traders.Error.class));
 		}
