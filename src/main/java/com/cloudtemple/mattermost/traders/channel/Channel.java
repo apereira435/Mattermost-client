@@ -32,6 +32,8 @@ public class Channel extends MatterMostClientObject
 	public String type;
 	public String display_name;
 	public String name;
+	public String props;
+	public String shared;
 	public String header;
 	public String purpose;
 	public long last_post_at;

@@ -44,6 +44,7 @@ public class MatterMostBotClient
 	public static final String apiV4 = "/api/v4";
 	private final ObjectMapper _json = new ObjectMapper()
 			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+			.configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, false)
 			.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
 	private final WebClient _client;
 	private final WebSocketClient _asyncClient;
@@ -159,6 +160,7 @@ public class MatterMostBotClient
 			if (200 == status || 201 == status)
 				return new MappingJsonFactory().setCodec(new ObjectMapper()
 					.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+					.configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, false)
 					.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)).createParser(str).readValueAs(t);
 			else
 				throw new ApiV4Exception(new MappingJsonFactory().createParser(str).readValueAs(com.cloudtemple.mattermost.traders.Error.class));
